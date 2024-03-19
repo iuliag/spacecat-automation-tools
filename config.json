@@ -1,0 +1,14 @@
+{
+  "imsOrgId": "some-ims-org-id",
+  "orgName": "some org name",
+  "siteBaseUrls": ["https://example.com"],
+  "channelId": "some-channel-id",
+  "userIds": ["some-user-id"],
+  "auditTypes": ["broken-backlinks"],
+  "enableAudits": true,
+  "auditsByOrg": false,
+  "enableReports": true,
+  "reportsByOrg": false,
+  "apiBaseUrl": "https://spacecat.experiencecloud.live/api/ci",
+  "apiKey": "your-api-key"
+}
