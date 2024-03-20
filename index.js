@@ -1,4 +1,3 @@
-import { fetch } from '@adobe/fetch';
 import { promises as fs } from 'fs';
 
 import SpaceCatSdk from './sdk.js';
@@ -69,7 +68,7 @@ async function readConfig(configFilePath) {
         }
 
         if (enableReports) {
-            if (!reportsByOrg) {
+            if (reportsByOrg) {
                 await sdk.enableReportsAtSiteLevel({site, auditTypes, channelId, userIds, byOrg: false});
             }
         }
