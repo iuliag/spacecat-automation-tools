@@ -29,46 +29,55 @@ async function readConfig(configFilePath) {
         auditTypes,
         channelId,
         userIds,
+        configureAudits,
         enableAudits,
         auditsByOrg,
-        enableReports,
+        configureReports,
         reportsByOrg,
         apiBaseUrl,
         apiKey,
+        orgId,
     } = config;
 
     const sdk = new SpaceCatSdk({apiBaseUrl, apiKey});
-    const organization = await sdk.createOrRetrieveOrganization({imsOrgId, orgName});
+
+    let organization;
+    if (orgId) {
+        organization = await sdk.getOrganizationById(orgId);
+    } else {
+        organization = await sdk.createOrRetrieveOrganization({imsOrgId, orgName});
+    }
     if (!organization) {
         log.error('Failed to create or retrieve organization');
         return;
     }
 
-    if (enableAudits && auditsByOrg) {
+    if (configureAudits && auditsByOrg) {
         await sdk.configureAuditsForOrganization({organization, auditTypes, enable: enableAudits});
     }
 
-    if (enableReports) {
+    if (configureReports) {
         if (reportsByOrg) {
-            await sdk.enableReportsAtOrganizationLevel({organization, auditTypes, channelId, userIds});
+            await sdk.enableReportsAtOrganizationLevel({organization, auditTypes, byOrg: true, channelId, userIds});
         } else {
             await sdk.enableReportsAtOrganizationLevel({organization, auditTypes, byOrg: false});
         }
     }
 
-    const results = await Promise.all(siteBaseUrls.map(async siteBaseUrl => {
+    await Promise.all(siteBaseUrls.map(async (siteBaseUrl) => {
         const site = await sdk.createOrRetrieveSite({orgId: organization.id, siteBaseUrl});
         if (!site) {
             log.error('Failed to create or retrieve site');
             return;
         }
+        // if the site is already created, assumption is that it has the correct organizationId set
 
-        if (enableAudits) {
+        if (configureAudits) {
             await sdk.configureAuditsForSite({site, auditTypes, enable: enableAudits});
         }
 
-        if (enableReports) {
-            if (reportsByOrg) {
+        if (configureReports) {
+            if (!reportsByOrg) {
                 await sdk.enableReportsAtSiteLevel({site, auditTypes, channelId, userIds, byOrg: false});
             }
         }

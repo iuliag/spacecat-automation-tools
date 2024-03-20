@@ -5,9 +5,10 @@
   "channelId": "some-channel-id",
   "userIds": ["some-user-id"],
   "auditTypes": ["broken-backlinks"],
+  "configureAudits": true,
   "enableAudits": true,
   "auditsByOrg": false,
-  "enableReports": true,
+  "configureReports": true,
   "reportsByOrg": false,
   "apiBaseUrl": "https://spacecat.experiencecloud.live/api/ci",
   "apiKey": "your-api-key"

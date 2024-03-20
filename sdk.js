@@ -59,6 +59,25 @@ export default class SpaceCatSdk {
         }
     }
 
+    async getOrganizationById(orgId) {
+        try {
+            const url = `${this.config.apiBaseUrl}/organizations/${orgId}`;
+            const responseData = await this.callApi({url});
+
+            if (!responseData) {
+                return null;
+            }
+
+            return {
+                id: responseData?.id,
+                config: responseData?.config
+            };
+        } catch (error) {
+            this.log.error(`Error in getOrganizationById function. Error: ${error.message}`);
+            throw error;
+        }
+    }
+
     async createOrganization({imsOrgId, orgName}) {
         try {
             const url = `${this.config.apiBaseUrl}/organizations`;
@@ -160,7 +179,7 @@ export default class SpaceCatSdk {
 
     static updateAuditsConfig({auditConfig = {}, auditTypes = [], enable = true}) {
         const updatedAuditConfig = { ...auditConfig };
-        updatedAuditConfig.auditsDisabled = !enable;
+        // updatedAuditConfig.auditsDisabled = !enable;
         updatedAuditConfig.auditTypeConfigs = updatedAuditConfig?.auditTypeConfigs || {};
 
         auditTypes.forEach(auditType => {
