@@ -1,6 +1,7 @@
 {
   "imsOrgId": "some-ims-org-id",
   "orgName": "some org name",
+  "orgId": "some-spacecat-org-id",
   "siteBaseUrls": ["https://example.com"],
   "channelId": "some-channel-id",
   "userIds": ["some-user-id"],
@@ -10,6 +11,6 @@
   "auditsByOrg": false,
   "configureReports": true,
   "reportsByOrg": false,
-  "apiBaseUrl": "https://spacecat.experiencecloud.live/api/ci",
+  "apiBaseUrl": "https://spacecat.experiencecloud.live/api/v1",
   "apiKey": "your-api-key"
 }
