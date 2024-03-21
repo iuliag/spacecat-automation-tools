@@ -70,7 +70,6 @@ async function readConfig(configFilePath) {
             log.error('Failed to create or retrieve site');
             return;
         }
-        // if the site is already created, assumption is that it has the correct organizationId set
 
         if (configureAudits) {
             await sdk.configureAuditsForSite({site, auditTypes, enable: enableAudits});
